@@ -67,6 +67,9 @@ flutter:
     - family: OpenSansBold
       fonts:
         - asset: fonts/OpenSans-Bold.ttf
+    - family: OpenSansLight
+      fonts:
+        - asset: fonts/OpenSans-Light.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:food_away/model/customer_review.dart';
 
 class RestaurantItem {
