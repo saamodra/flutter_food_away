@@ -1,16 +1,52 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_away/components/app_bar.dart';
 import 'package:food_away/config/fa_color.dart' as FaColor;
 import 'package:food_away/model/restaurant_item.dart';
 import 'dart:developer' as developer;
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final String _search = "";
 
+  ScrollController _scrollController = ScrollController();
+  double scrollPosition = 0;
+  bool lastStatus = true;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    // developer.log(_scrollController.offset.toString(), name: 'my.app.category');
+    return _scrollController.hasClients &&
+        _scrollController.offset > 0;
+  }
 
   @override
   Widget build(BuildContext context) {
-    developer.log(restaurantList.length.toString(), name: 'my.app.category');
+    // developer.log(restaurantList.length.toString(), name: 'my.app.category');
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -24,9 +60,10 @@ class Home extends StatelessWidget {
                   icon: Image.asset("images/fa-logo.png"),
                 ),
                 titleSpacing: 35,
-                backgroundColor: Colors.transparent,
+                backgroundColor:  lastStatus ? Colors.white : Colors.transparent,
               ),
               body: SingleChildScrollView(
+                controller: _scrollController,
                 physics: ScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
