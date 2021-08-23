@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_away/config/fa_color.dart' as FaColor;
+import 'package:food_away/model/restaurant_item.dart';
+import 'dart:developer' as developer;
 
 class Home extends StatelessWidget {
   final String _search = "";
 
+
   @override
   Widget build(BuildContext context) {
+    developer.log(restaurantList.length.toString(), name: 'my.app.category');
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -23,6 +27,7 @@ class Home extends StatelessWidget {
                 backgroundColor: Colors.transparent,
               ),
               body: SingleChildScrollView(
+                physics: ScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -155,99 +160,110 @@ class Home extends StatelessWidget {
                                   color: Color(0xff585858)),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Card(
-                              margin: const EdgeInsets.symmetric(vertical: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                              child: SizedBox(
-                                height: 420,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                                        child: Image.asset(
-                                          "images/ampiran_kota.jpg",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                          ListView.builder(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: restaurantList.length,
+                            itemBuilder: (context, index) {
+                              final RestaurantItem restaurantItem = restaurantList[index];
+
+                              return InkWell(
+                                onTap: () {},
+                                child: Card(
+                                    margin: const EdgeInsets.symmetric(vertical: 10),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)
                                     ),
-                                    SizedBox(height: 210,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(25),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            RichText(
-                                              overflow: TextOverflow.ellipsis,
-                                              text: TextSpan(
-                                                text: "Melting Pot",
-                                                style: TextStyle(
-                                                  color: FaColor.orangePrimary,
-                                                    fontSize: 22.0,
-                                                    fontFamily: 'OpenSansBold',
-                                                    fontWeight: FontWeight.bold
-                                                ),
+                                    child: SizedBox(
+                                      height: 420,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          Expanded(
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                                              child: Image.asset(
+                                                "images/" + restaurantItem.pictureUrl,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                            Container(
-                                              margin: const EdgeInsets.only(top: 12),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          ),
+                                          SizedBox(height: 210,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(25),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        margin: const EdgeInsets.only(right: 8),
-                                                        child: Icon(Icons.location_city)),
-                                                      Text("Medan", style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: FaColor.secondary
-                                                      ),),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          margin: const EdgeInsets.only(right: 8),
-                                                          child: Icon(Icons.star, color: FaColor.orangePrimary,)
+                                                  RichText(
+                                                    overflow: TextOverflow.ellipsis,
+                                                    text: TextSpan(
+                                                      text: restaurantItem.name,
+                                                      style: TextStyle(
+                                                          color: FaColor.orangePrimary,
+                                                          fontSize: 22.0,
+                                                          fontFamily: 'OpenSansBold',
+                                                          fontWeight: FontWeight.bold
                                                       ),
-                                                      Text("4.2", style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: FaColor.secondary
-                                                      ),),
-                                                    ],
+                                                    ),
                                                   ),
+                                                  Container(
+                                                    margin: const EdgeInsets.only(top: 12),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                                margin: const EdgeInsets.only(right: 8),
+                                                                child: Icon(Icons.location_city)),
+                                                            Text(restaurantItem.city, style: TextStyle(
+                                                                fontSize: 18,
+                                                                color: FaColor.secondary
+                                                            ),),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Container(
+                                                                margin: const EdgeInsets.only(right: 8),
+                                                                child: Icon(Icons.star, color: FaColor.orangePrimary,)
+                                                            ),
+                                                            Text(restaurantItem.rating.toString(), style: TextStyle(
+                                                                fontSize: 18,
+                                                                color: FaColor.secondary
+                                                            ),),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin: const EdgeInsets.symmetric(vertical: 20),
+                                                    child: RichText(
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      text: TextSpan(
+                                                        text: restaurantItem.description,
+                                                        style: TextStyle(
+                                                            height: 1.5,
+                                                            fontSize: 18,
+                                                            color: FaColor.secondary
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              margin: const EdgeInsets.symmetric(vertical: 20),
-                                              child: RichText(
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                text: TextSpan(
-                                                  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc mattis nisl at urna vehicula, ac malesuada diam sagittis. Curabitur laoreet dignissim lacus ",
-                                                  style: TextStyle(
-                                                    height: 1.5,
-                                                    fontSize: 18,
-                                                    color: FaColor.secondary
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                    )
                                 ),
-                              )
-                            ),
+                              );
+                            },
                           )
                         ],
                       )
