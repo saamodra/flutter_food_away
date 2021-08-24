@@ -1,0 +1,3 @@
+enum FaAppBarType {
+  WithBackLeading, NoLeading
+}

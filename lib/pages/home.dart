@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_away/components/app_bar.dart';
+import 'package:food_away/config/fa_appbar_background.dart';
+import 'package:food_away/config/fa_appbar_type.dart';
 import 'package:food_away/config/fa_color.dart' as FaColor;
-import 'package:food_away/model/restaurant_item.dart';
+import 'package:food_away/models/restaurant_item.dart';
 import 'dart:developer' as developer;
+
+import 'package:food_away/pages/detail_restaurant.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,8 +18,6 @@ class _HomeState extends State<Home> {
   final String _search = "";
 
   ScrollController _scrollController = ScrollController();
-  double scrollPosition = 0;
-  bool lastStatus = true;
 
   @override
   void initState() {
@@ -38,7 +40,11 @@ class _HomeState extends State<Home> {
             Scaffold(
               backgroundColor: Colors.transparent,
               extendBodyBehindAppBar: true,
-              appBar: FaAppBar(scrollController: _scrollController),
+              appBar: FaAppBar(
+                  faAppBarType: FaAppBarType.NoLeading,
+                  faAppBarBackground: FaAppBarBackground.Dynamic,
+                  scrollController: _scrollController
+              ),
               body: SingleChildScrollView(
                 controller: _scrollController,
                 physics: ScrollPhysics(),
@@ -184,7 +190,11 @@ class _HomeState extends State<Home> {
                               final RestaurantItem restaurantItem = restaurantList[index];
 
                               return InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  //   return DetailRestaurant(restaurantItem: restaurantItem);
+                                  // }));
+                                },
                                 child: Card(
                                     margin: const EdgeInsets.symmetric(vertical: 10),
                                     shape: RoundedRectangleBorder(

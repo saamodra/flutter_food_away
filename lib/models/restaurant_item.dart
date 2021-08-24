@@ -1,4 +1,4 @@
-import 'package:food_away/model/customer_review.dart';
+import 'package:food_away/models/customer_review.dart';
 
 class RestaurantItem {
   String name;
