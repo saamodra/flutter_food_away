@@ -20,33 +20,17 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
     super.dispose();
-  }
-
-  _scrollListener() {
-    if (isShrink != lastStatus) {
-      setState(() {
-        lastStatus = isShrink;
-      });
-    }
-  }
-
-  bool get isShrink {
-    // developer.log(_scrollController.offset.toString(), name: 'my.app.category');
-    return _scrollController.hasClients &&
-        _scrollController.offset > 0;
   }
 
   @override
   Widget build(BuildContext context) {
-    // developer.log(restaurantList.length.toString(), name: 'my.app.category');
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -54,14 +38,7 @@ class _HomeState extends State<Home> {
             Scaffold(
               backgroundColor: Colors.transparent,
               extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                title: IconButton(
-                  onPressed: () {},
-                  icon: Image.asset("images/fa-logo.png"),
-                ),
-                titleSpacing: 35,
-                backgroundColor:  lastStatus ? Colors.white : Colors.transparent,
-              ),
+              appBar: FaAppBar(scrollController: _scrollController),
               body: SingleChildScrollView(
                 controller: _scrollController,
                 physics: ScrollPhysics(),
