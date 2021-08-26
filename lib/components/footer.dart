@@ -8,7 +8,9 @@ class FaFooter extends StatelessWidget {
     // TODO: implement build
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: FaColor.secondary, width: 0.1)
+          border: Border(
+              top: BorderSide(width: 0.2, color: FaColor.secondary)
+          )
       ),
       padding: const EdgeInsets.all(25.0),
       child: Column(

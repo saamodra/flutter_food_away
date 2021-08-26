@@ -52,11 +52,11 @@ class _HomeState extends State<Home> {
                     if(constraints.maxWidth <= 600) {
                       return HomeMobile();
                     } else if(constraints.maxWidth <= 768) {
-                      return HomeDesktop(gridCount: 2, gridChildAspectRatio: 0.75,);
+                      return HomeDesktop(gridCount: 2, gridChildAspectRatio: 0.75, itemsWidth: 1);
                     } else if(constraints.maxWidth <= 1024) {
-                      return HomeDesktop(gridCount: 3, gridChildAspectRatio: 0.7);
+                      return HomeDesktop(gridCount: 3, gridChildAspectRatio: 0.65, itemsWidth: 1);
                     } else {
-                      return HomeDesktop(gridCount: 4, gridChildAspectRatio: 0.75);
+                      return HomeDesktop(gridCount: 4, gridChildAspectRatio: 0.75, itemsWidth: 0.8,);
                     }
                   },
                 )
@@ -325,8 +325,9 @@ class HomeMobile extends StatelessWidget {
 class HomeDesktop extends StatelessWidget {
   final int gridCount;
   final double gridChildAspectRatio;
+  final double itemsWidth;
 
-  HomeDesktop({required this.gridCount, required this.gridChildAspectRatio});
+  HomeDesktop({required this.gridCount, required this.gridChildAspectRatio, required this.itemsWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -451,7 +452,7 @@ class HomeDesktop extends StatelessWidget {
           child: Container(
               padding: const EdgeInsets.symmetric(
                   horizontal: 25, vertical: 35),
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: MediaQuery.of(context).size.width * itemsWidth,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
